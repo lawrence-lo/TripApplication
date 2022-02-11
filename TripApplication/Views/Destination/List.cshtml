@@ -1,0 +1,15 @@
+﻿@model IEnumerable<TripApplication.Models.DestinationDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Destination/New">New Destination</a>
+@foreach (var destination in Model)
+{
+    <h2><a href="/Destination/Details/@destination.DestinationID">@destination.DestinationName</a></h2>
+    <div>Country: @destination.DestinationCountry</div>
+    <div>Latitude: @destination.DestinationLatitude</div>
+    <div>Longitude: @destination.DestinationLongitude</div>
+}
+

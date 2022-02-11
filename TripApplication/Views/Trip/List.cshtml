@@ -1,0 +1,14 @@
+﻿@model IEnumerable<TripApplication.Models.TripDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<a href="/Trip/New">New Trip</a>
+@foreach (var trip in Model)
+{
+    <h2><a href="/Trip/Details/@trip.TripID">@trip.TripName</a></h2>
+    <div>From: @trip.TripFromDate.ToString("MMM dd, yyyy")</div>
+    <div>To: @trip.TripToDate.ToString("MMM dd, yyyy")</div>
+    <div>Remarks: @trip.TripRemarks</div>
+}

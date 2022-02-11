@@ -1,0 +1,28 @@
+﻿@model TripApplication.Models.ViewModels.UpdateDestination
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Destination</h2>
+<form action="/Destination/Update/@Model.SelectedDestination.DestinationID" method="POST">
+    <div style="display:none;">
+        @* Pass through the destination ID *@
+        <input type="text" name="DestinationID" value="@Model.SelectedDestination.DestinationID" />
+    </div>
+    <div>
+        <label>Name:</label> <input type="text" name="DestinationName" value="@Model.SelectedDestination.DestinationName" />
+    </div>
+    <div>
+        <label>Country:</label> <input type="text" name="DestinationCountry" value="@Model.SelectedDestination.DestinationCountry" />
+    </div>
+    <div>
+        <label>Latitude:</label> <input type="text" name="DestinationLatitude" value="@Model.SelectedDestination.DestinationLatitude" />
+    </div>
+    <div>
+        <label>Longitude:</label> <input type="text" name="DestinationLongitude" value="@Model.SelectedDestination.DestinationLongitude" />
+    </div>
+    <div>
+        <input type="submit" value="Update Destination" />
+    </div>
+</form>

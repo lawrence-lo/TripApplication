@@ -1,0 +1,38 @@
+﻿@model TripApplication.Models.ViewModels.DetailsTrip
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<a href="/Trip/List">Go back to list</a>
+<br />
+<a href="/Trip/Edit/@Model.SelectedTrip.TripID">Update</a>
+<br />
+<a style="color:#ab2020;" href="/Trip/DeleteConfirm/@Model.SelectedTrip.TripID">Delete</a>
+<h2>@Model.SelectedTrip.TripName</h2>
+<div>From: @Model.SelectedTrip.TripFromDate.ToString("MMM dd, yyyy")</div>
+<div>To: @Model.SelectedTrip.TripToDate.ToString("MMM dd, yyyy")</div>
+<div>Remarks: @Model.SelectedTrip.TripRemarks</div>
+
+<div>
+    <h2>Destinations Related to @Model.SelectedTrip.TripName:</h2>
+    @foreach (var destination in Model.RelatedDestinations)
+    {
+        <a href="/Destination/Details/@destination.DestinationID">@destination.DestinationName</a> <a style="color:#ab2020;" href="/Trip/Unassociate/@Model.SelectedTrip.TripID?DestinationID=@destination.DestinationID">[x]</a><br />
+    }
+
+    <div>
+        <h4>Add new Destination to @Model.SelectedTrip.TripName</h4>
+        <form method="POST" action="/Trip/Associate/@Model.SelectedTrip.TripID">
+            <select name="DestinationID">
+                @foreach (var destination in Model.UnrelatedDestinations)
+                {
+                    <option value="@destination.DestinationID">@destination.DestinationName</option>
+                }
+
+            </select>
+            <input type="submit" value="Associate Destination" />
+        </form>
+    </div>
+</div>

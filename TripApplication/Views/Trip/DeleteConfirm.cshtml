@@ -1,0 +1,15 @@
+﻿@model TripApplication.Models.TripDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this trip?</h2>
+<a href="/Trip/List">Cancel</a>
+<h2>@Model.TripName</h2>
+<div>From: @Model.TripFromDate.ToString("MMM dd, yyyy")</div>
+<div>To: @Model.TripToDate.ToString("MMM dd, yyyy")</div>
+<div>Remarks: @Model.TripRemarks</div>
+<form action="/Trip/Delete/@Model.TripID" method="POST">
+    <input type="submit" value="Confirm Delete" />
+</form>

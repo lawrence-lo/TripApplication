@@ -1,0 +1,15 @@
+﻿@model TripApplication.Models.DestinationDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this destination?</h2>
+<a href="/Destination/List">Cancel</a>
+<h2>@Model.DestinationName</h2>
+<div>Country: @Model.DestinationCountry</div>
+<div>Latitude: @Model.DestinationLatitude</div>
+<div>Longitude: @Model.DestinationLongitude</div>
+<form action="/Destination/Delete/@Model.DestinationID" method="POST">
+    <input type="submit" value="Confirm Delete" />
+</form>

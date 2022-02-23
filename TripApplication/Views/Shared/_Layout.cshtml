@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - Where Have I Been?</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css" type="text/css">
+    @RenderSection("HeadScripts", required: false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

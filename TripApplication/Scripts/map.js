@@ -1,4 +1,7 @@
-﻿var map = new ol.Map({
+﻿const baseURL = "https://localhost:44399/";
+
+// Create a map
+var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.Tile({
@@ -11,35 +14,77 @@
     })
 });
 
-console.log("loaded");
 
-// AJAX for coordinates
-//goal: send a request which looks like this:
-//GET: api/DestinationData/ListDestinationsInTrips/
-var destinations;
-var URL = "https://localhost:44399/api/DestinationData/ListDestinationsInTrips/";
-var rq = new XMLHttpRequest();
-rq.open("GET", URL, true);
-rq.setRequestHeader("Content-Type", "application/json");
-rq.onreadystatechange = function () {
-    if (rq.readyState == 4 && rq.status == 200) {
-        destinations = JSON.parse(this.responseText);
-        //console.log(destinations);
+// Make an ajax call to get all destinations
+$.ajax({
+    url: baseURL + 'api/DestinationData/ListDestinationsInTrips/', success: function (result) {
+        var featuresArray = [];
+        destinations = result;
         // add destinations to map
         // Reference: https://openstreetmap.be/en/projects/howto/openlayers.html
         for (i = 0; i < destinations.length; i++) {
-            var layer = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                    features: [
-                        new ol.Feature({
-                            geometry: new ol.geom.Point(ol.proj.fromLonLat([destinations[i]["DestinationLongitude"], destinations[i]["DestinationLatitude"]]))
-                        })
-                    ]
+            featuresArray.push(
+                new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([destinations[i]['DestinationLongitude'], destinations[i]['DestinationLatitude']])),
+                    DestinationName: destinations[i]['DestinationName'],
+                    DestinationID: destinations[i]['DestinationID']
                 })
-            });
-            map.addLayer(layer);
+            );
         }
+        var layer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: featuresArray
+            })
+        });
+        map.addLayer(layer);
     }
-}
-// Sending the request
-rq.send();
+});
+
+
+// Initialize popup
+/* References:
+ * https://openlayers.org/en/latest/examples/popup.html
+ * https://openstreetmap.be/en/projects/howto/openlayers.html
+*/
+var container = document.getElementById('popup');
+var content = document.getElementById('popup-content');
+var closer = document.getElementById('popup-closer');
+
+var overlay = new ol.Overlay({
+    element: container,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 250
+    }
+});
+map.addOverlay(overlay);
+
+closer.onclick = function () {
+    overlay.setPosition(undefined);
+    closer.blur();
+    return false;
+};
+
+
+// Open popup
+map.on('singleclick', function (event) {
+    if (map.hasFeatureAtPixel(event.pixel) === true) {
+        let feature = map.getFeaturesAtPixel(event.pixel);
+        // Make an ajax call to get trips for the destination
+        $.ajax({
+            url: baseURL + 'api/TripData/ListTripsForDestination/' + feature[0].A.DestinationID, success: function (result) {
+                let trips = '<ul>';
+                for (i = 0; i < result.length; i++) {
+                    let date = new Date(result[i].TripFromDate).toLocaleDateString();
+                    trips += '<li><a href="' + baseURL + 'Trip/Details/' + result[i].TripID + '">' + date + ' - ' + result[i].TripName + '</a></li>';
+                }
+                trips += '</ul>';
+                content.innerHTML = '<b><a href="' + baseURL + 'Destination/Details/' + feature[0].A.DestinationID + '">' + feature[0].A.DestinationName + '</a></b>' + trips;
+                overlay.setPosition(event.coordinate);
+            }
+        });
+    } else {
+        overlay.setPosition(undefined);
+        closer.blur();
+    }
+});

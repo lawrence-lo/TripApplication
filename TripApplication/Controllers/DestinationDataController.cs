@@ -86,11 +86,11 @@ namespace TripApplication.Controllers
         /// CONTENT: all Destinations in the database associated with any trip
         /// </returns>
         /// <example>
-        /// GET: api/DestinationData/ListDestinationsInTrips/
+        /// GET: api/DestinationData/ListDestinationsRelatedToTrips/
         /// </example>
         [HttpGet]
         [ResponseType(typeof(DestinationDto))]
-        public IHttpActionResult ListDestinationsInTrips()
+        public IHttpActionResult ListDestinationsRelatedToTrips()
         {
             List<Destination> Destinations = db.Destinations.Where(
                 k => k.Trips.Any()

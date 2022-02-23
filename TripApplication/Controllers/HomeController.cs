@@ -25,10 +25,10 @@ namespace TripApplication.Controllers
         {
             DetailsHome ViewModel = new DetailsHome();
 
-            //objective: communicate with our ListDestinationsInTrips data api to retrieve all destinations that are linked to any trip
-            //curl https://localhost:44399/api/DestinationData/ListDestinationsInTrips/
+            //objective: communicate with our ListDestinationsRelatedToTrips data api to retrieve all destinations that are linked to any trip
+            //curl https://localhost:44399/api/DestinationData/ListDestinationsRelatedToTrips/
 
-            string url = "destinationdata/listdestinationsintrips/";
+            string url = "destinationdata/listdestinationsrelatedtotrips/";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<DestinationDto> Destinations = response.Content.ReadAsAsync<IEnumerable<DestinationDto>>().Result;

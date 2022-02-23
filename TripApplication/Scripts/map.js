@@ -17,7 +17,7 @@ var map = new ol.Map({
 
 // Make an ajax call to get all destinations
 $.ajax({
-    url: baseURL + 'api/DestinationData/ListDestinationsInTrips/', success: function (result) {
+    url: baseURL + 'api/DestinationData/ListDestinationsRelatedToTrips/', success: function (result) {
         var featuresArray = [];
         destinations = result;
         // add destinations to map

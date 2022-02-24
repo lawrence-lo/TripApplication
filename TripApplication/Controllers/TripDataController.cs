@@ -33,7 +33,7 @@ namespace TripApplication.Controllers
         [ResponseType(typeof(TripDto))]
         public IHttpActionResult ListTrips()
         {
-            List<Trip> Trips = db.Trips.ToList();
+            List<Trip> Trips = db.Trips.OrderByDescending(s => s.TripFromDate).ToList();
             List<TripDto> TripDtos = new List<TripDto>();
 
             Trips.ForEach(a => TripDtos.Add(new TripDto()
@@ -67,7 +67,7 @@ namespace TripApplication.Controllers
             List<Trip> Trips = db.Trips.Where(
                 a => a.Destinations.Any(
                     k => k.DestinationID == id
-                )).ToList();
+                )).OrderByDescending(s => s.TripFromDate).ToList();
             List<TripDto> TripDtos = new List<TripDto>();
 
             Trips.ForEach(a => TripDtos.Add(new TripDto()

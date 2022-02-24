@@ -30,7 +30,7 @@ namespace TripApplication.Controllers
         [ResponseType(typeof(DestinationDto))]
         public IHttpActionResult ListDestinations()
         {
-            List<Destination> Destinations = db.Destinations.ToList();
+            List<Destination> Destinations = db.Destinations.OrderBy(s => s.DestinationName).ToList();
             List<DestinationDto> DestinationDtos = new List<DestinationDto>();
 
             Destinations.ForEach(a => DestinationDtos.Add(new DestinationDto()
@@ -63,7 +63,7 @@ namespace TripApplication.Controllers
             List<Destination> Destinations = db.Destinations.Where(
                 k => k.Trips.Any(
                     a => a.TripID == id)
-                ).ToList();
+                ).OrderBy(s => s.DestinationName).ToList();
             List<DestinationDto> DestinationDtos = new List<DestinationDto>();
 
             Destinations.ForEach(k => DestinationDtos.Add(new DestinationDto()
@@ -94,7 +94,7 @@ namespace TripApplication.Controllers
         {
             List<Destination> Destinations = db.Destinations.Where(
                 k => k.Trips.Any()
-                ).ToList();
+                ).OrderBy(s => s.DestinationName).ToList();
             List<DestinationDto> DestinationDtos = new List<DestinationDto>();
 
             Destinations.ForEach(k => DestinationDtos.Add(new DestinationDto()
@@ -127,7 +127,7 @@ namespace TripApplication.Controllers
             List<Destination> Destinations = db.Destinations.Where(
                 k => !k.Trips.Any(
                     a => a.TripID == id)
-                ).ToList();
+                ).OrderBy(s => s.DestinationName).ToList();
             List<DestinationDto> DestinationDtos = new List<DestinationDto>();
 
             Destinations.ForEach(k => DestinationDtos.Add(new DestinationDto()

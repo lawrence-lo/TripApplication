@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
-//using System.Diagnostics;
+using System.Diagnostics;
 using TripApplication.Models;
 using TripApplication.Models.ViewModels;
 using System.Web.Script.Serialization;
@@ -146,7 +146,7 @@ namespace TripApplication.Controllers
 
         // POST: Trip/Update/5
         [HttpPost]
-        public ActionResult Update(int id, Trip trip)
+        public ActionResult Update(int id, Trip trip, HttpPostedFileBase TripPic)
         {
 
             string url = "tripdata/updatetrip/" + id;
@@ -154,8 +154,25 @@ namespace TripApplication.Controllers
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            if (response.IsSuccessStatusCode)
+            //update request is successful, and we have image data
+            if (response.IsSuccessStatusCode && TripPic != null)
             {
+                //Updating the trip picture as a separate request
+                Debug.WriteLine("Calling Update Image method.");
+                //Send over image data for player
+                url = "TripData/UploadTripPic/" + id;
+                //Debug.WriteLine("Received Trip Picture "+TripPic.FileName);
+
+                MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                HttpContent imagecontent = new StreamContent(TripPic.InputStream);
+                requestcontent.Add(imagecontent, "TripPic", TripPic.FileName);
+                response = client.PostAsync(url, requestcontent).Result;
+
+                return RedirectToAction("List");
+            }
+            else if (response.IsSuccessStatusCode)
+            {
+                //No image upload, but update still successful
                 return RedirectToAction("List");
             }
             else

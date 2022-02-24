@@ -4,7 +4,7 @@
 }
 
 <h2>Update Trip</h2>
-<form action="/Trip/Update/@Model.SelectedTrip.TripID" method="POST">
+<form action="/Trip/Update/@Model.SelectedTrip.TripID" method="POST" enctype="multipart/form-data">
     <div style="display:none;">
         @* Pass through the trip ID *@
         <input type="text" name="TripID" value="@Model.SelectedTrip.TripID" />
@@ -20,6 +20,9 @@
     </div>
     <div>
         <label>Remarks:</label><textarea name="TripRemarks" rows="4" cols="50">@Model.SelectedTrip.TripRemarks</textarea>
+    </div>
+    <div>
+        <input type="file" name="TripPic" />
     </div>
     <div>
         <input type="submit" value="Update Trip" />

@@ -206,6 +206,10 @@
     <Compile Include="Migrations\202202020503034_destinations.Designer.cs">
       <DependentUpon>202202020503034_destinations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202240101232_trippic.cs" />
+    <Compile Include="Migrations\202202240101232_trippic.Designer.cs">
+      <DependentUpon>202202240101232_trippic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Destination.cs" />
@@ -294,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Trips\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -320,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202020503034_destinations.resx">
       <DependentUpon>202202020503034_destinations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202240101232_trippic.resx">
+      <DependentUpon>202202240101232_trippic.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

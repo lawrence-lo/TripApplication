@@ -15,6 +15,17 @@
 <div>To: @Model.SelectedTrip.TripToDate.ToString("MMM dd, yyyy")</div>
 <div>Remarks: @Model.SelectedTrip.TripRemarks</div>
 
+@{
+    string imageurl = "/Content/Images/Trips/default.jpg";
+    if (Model.SelectedTrip.TripHasPic)
+    {
+        imageurl = "/Content/Images/Trips/" + Model.SelectedTrip.TripID + "." + Model.SelectedTrip.PicExtension;
+    }
+}
+<div>
+    <img style="display:block; max-width:100%;" alt="@Model.SelectedTrip.TripName" src="@imageurl" />
+</div>
+
 <div>
     <h2>Destinations Related to @Model.SelectedTrip.TripName:</h2>
     @foreach (var destination in Model.RelatedDestinations)

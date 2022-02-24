@@ -15,6 +15,11 @@ namespace TripApplication.Models
         public DateTime TripToDate { get; set; }
         public string TripRemarks { get; set; }
 
+        //data needed for keeping track of trip images uploaded
+        //images deposited into /Content/Images/Trips/{id}.{extension}
+        public bool TripHasPic { get; set; }
+        public string PicExtension { get; set; }
+
         //A trip can have many destinations
         public ICollection<Destination> Destinations { get; set; }
     }
@@ -26,5 +31,10 @@ namespace TripApplication.Models
         public DateTime TripFromDate { get; set; }
         public DateTime TripToDate { get; set; }
         public string TripRemarks { get; set; }
+
+        //data needed for keeping track of trip images uploaded
+        //images deposited into /Content/Images/Trips/{id}.{extension}
+        public bool TripHasPic { get; set; }
+        public string PicExtension { get; set; }
     }
 }

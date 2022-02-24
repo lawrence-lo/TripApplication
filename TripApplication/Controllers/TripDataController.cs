@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -9,6 +11,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TripApplication.Models;
+using System.Diagnostics;
 
 namespace TripApplication.Controllers
 {
@@ -165,7 +168,9 @@ namespace TripApplication.Controllers
                 TripName = Trip.TripName,
                 TripFromDate = Trip.TripFromDate,
                 TripToDate = Trip.TripToDate,
-                TripRemarks = Trip.TripRemarks
+                TripRemarks = Trip.TripRemarks,
+                TripHasPic = Trip.TripHasPic,
+                PicExtension = Trip.PicExtension
             };
             if (Trip == null)
             {
@@ -224,6 +229,91 @@ namespace TripApplication.Controllers
                 }
             }
             return StatusCode(HttpStatusCode.NoContent);
+        }
+        
+        /// <summary>
+        /// Receives trip picture data, uploads it to the webserver and updates the trip's HasPic option
+        /// </summary>
+        /// <param name="id">the trip id</param>
+        /// <returns>status code 200 if successful.</returns>
+        /// <example>
+        /// curl -F trippic=@file.jpg "https://localhost:xx/api/tripdata/uploadtrippic/2"
+        /// POST: api/tripData/UpdatetripPic/3
+        /// HEADER: enctype=multipart/form-data
+        /// FORM-DATA: image
+        /// </example>
+        /// https://stackoverflow.com/questions/28369529/how-to-set-up-a-web-api-controller-for-multipart-form-data
+
+        [HttpPost]
+        public IHttpActionResult UploadTripPic(int id)
+        {
+
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                Debug.WriteLine("Received multipart form data.");
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                Debug.WriteLine("Files Received: " + numfiles);
+
+                //Check if a file is posted
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var tripPic = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if (tripPic.ContentLength > 0)
+                    {
+                        //establish valid file types (can be changed to other file extensions if desired!)
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(tripPic.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file path to ~/Content/trips/{id}.{extension}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Trips/"), fn);
+
+                                //save the file
+                                tripPic.SaveAs(path);
+
+                                //if these are all successful then we can set these fields
+                                haspic = true;
+                                picextension = extension;
+
+                                //Update the animal haspic and picextension fields in the database
+                                Trip Selectedtrip = db.Trips.Find(id);
+                                Selectedtrip.TripHasPic = haspic;
+                                Selectedtrip.PicExtension = extension;
+                                db.Entry(Selectedtrip).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("trip Image was not saved successfully.");
+                                Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
+                            }
+                        }
+                    }
+
+                }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
+            }
+
         }
 
         /// <summary>

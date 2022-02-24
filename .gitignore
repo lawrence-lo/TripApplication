@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Image upload files
+Content/Images/Trips/
+!Content/Images/Trips/default.jpg
+/TripApplication/Content/Images/Trips/1.jpg
+/TripApplication/Content/Images/Trips/4.jpg
+/TripApplication/Content/Images/Trips/7.jpg

@@ -1,0 +1,32 @@
+﻿main h2 {
+    font-size: 6rem;
+    font-weight: 900;
+    color: #F5F5F2;
+    margin-bottom: 2rem;
+}
+
+main p {
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #F5F5F2;
+    margin: 0;
+}
+
+main span {
+    font-size: 5rem;
+}
+
+main .btn-custom {
+    margin-top: 2rem;
+}
+
+#map {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.ol-viewport {
+    border-radius: 15px 50px;
+}
+

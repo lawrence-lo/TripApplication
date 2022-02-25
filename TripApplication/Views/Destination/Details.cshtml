@@ -1,22 +1,49 @@
 ﻿@model TripApplication.Models.ViewModels.DetailsDestination
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Destination Details";
+}
+@section HeadScripts {
+    <link rel="stylesheet" href="~/Content/ddetails.css" type="text/css">
 }
 
-<a href="/Destination/List">Go back to list</a>
-<br />
-<a href="/Destination/Edit/@Model.SelectedDestination.DestinationID">Update</a>
-<br />
-<a style="color:#ab2020;" href="/Destination/DeleteConfirm/@Model.SelectedDestination.DestinationID">Delete</a>
-<h2>@Model.SelectedDestination.DestinationName</h2>
-<div>Country: @Model.SelectedDestination.DestinationCountry</div>
-<div>Latitude: @Model.SelectedDestination.DestinationLatitude</div>
-<div>Longitude: @Model.SelectedDestination.DestinationLongitude</div>
-
-<div>
-    <h2>Related Trips for @Model.SelectedDestination.DestinationName:</h2>
-    @foreach (var trip in Model.RelatedTrips)
-    {
-        <a href="/Trip/Details/@trip.TripID">@trip.TripFromDate.ToString("MMM dd, yyyy") - @trip.TripName</a><br />
-    }
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="list-group">
+            <div class="list-group-item">
+                <h2 class="list-group-item-heading text-center">@Model.SelectedDestination.DestinationName</h2>
+                <p class="list-group-item-text">
+                    <div>
+                        <div class="col-sm-4">Country</div>
+                        <div class="col-sm-8">@Model.SelectedDestination.DestinationCountry</div>
+                    </div>
+                    <div>
+                        <div class="col-sm-4">Latitude</div>
+                        <div class="col-sm-8">@Model.SelectedDestination.DestinationLatitude</div>
+                    </div>
+                    <div>
+                        <div class="col-sm-4">Longitude</div>
+                        <div class="col-sm-8">@Model.SelectedDestination.DestinationLongitude</div>
+                    </div>
+                    <div>
+                        <div class="col-sm-4">Trip(s)</div>
+                        <div class="col-sm-8">
+                            <ul>
+                                @foreach (var trip in Model.RelatedTrips)
+                                {
+                                    <li><a href="/Trip/Details/@trip.TripID">@trip.TripFromDate.ToString("MMM dd, yyyy") - @trip.TripToDate.ToString("MMM dd, yyyy")</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </p>
+                <div class="col-sm-offset-4">
+                    <a class="btn btn-info y-margin" href="/Destination/Edit/@Model.SelectedDestination.DestinationID" role="button">Update</a>
+                    <a class="btn btn-danger y-margin" href="/Destination/DeleteConfirm/@Model.SelectedDestination.DestinationID" role="button">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 text-center y-margin">
+    <a class="primary-light" href="/Destination/List">Back to list</a>
 </div>

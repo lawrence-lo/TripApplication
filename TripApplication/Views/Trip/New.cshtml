@@ -1,24 +1,40 @@
 ﻿
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "New Trip";
 }
-
-<h2>Create Trip</h2>
-<form action="/Trip/Create" method="POST">
-    <div>
-        <label>Name:</label> <input type="text" name="TripName" />
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h2 class="text-center">New Trip</h2>
+        <form class="form-horizontal" action="/Trip/Create" method="POST">
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripName">Trip Name</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="TripName" name="TripName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripFromDate">From</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="date" id="TripFromDate" name="TripFromDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripToDate">To</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="date" id="TripToDate" name="TripToDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripRemarks">Remarks</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" id="TripRemarks" name="TripRemarks" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button class="btn btn-default btn-custom" type="submit">Add Trip</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label>From:</label> <input type="date" name="TripFromDate" />
-    </div>
-    <div>
-        <label>To:</label> <input type="date" name="TripToDate" />
-    </div>
-    <div>
-        <label>Remarks:</label><textarea name="TripRemarks" rows="4" cols="50"></textarea>
-    </div>
-    <div>
-        <input type="submit" value="Add Trip" />
-    </div>
-</form>
-
+</div>

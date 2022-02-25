@@ -1,10 +1,67 @@
-﻿body {
+﻿html {
+    font-size: 62.5%;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("./Images/bg.jpg");
+    /* Source: https://unsplash.com/photos/A5rCN8626Ck */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+}
+
+main {
+    min-height: calc(100vh - 100px);
+}
+
+footer {
+    max-height: 50px;
+    color: #F5F5F2;
+}
+
+.navbar-brand {
+    font-family: 'Lobster', cursive;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.navbar ul {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.btn-custom {
+    font-weight: 700;
+    color: #2F3A5B;
+    background-color: #E1A259;
+    border: none;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #F5F5F2;
+    margin: 3rem 0;
+}
+
+label {
+    color: #F5F5F2;
+}
+
+.y-margin {
+    margin: 1rem 0;
+}
+
+.primary-light {
+    color: #F5F5F2;
 }
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
+main, footer {
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -16,9 +73,12 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+@media screen and (max-width: 768px) {
+    body {
+        background-size: auto;
+    }
+
+    main {
+        height: auto;
+    }
 }

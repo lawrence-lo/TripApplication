@@ -73,13 +73,13 @@ map.on('singleclick', function (event) {
         // Make an ajax call to get trips for the destination
         $.ajax({
             url: baseURL + 'api/TripData/ListTripsForDestination/' + feature[0].A.DestinationID, success: function (result) {
-                let trips = '<ul>';
-                for (i = 0; i < result.length; i++) {
-                    let date = new Date(result[i].TripFromDate).toLocaleDateString();
-                    trips += '<li><a href="' + baseURL + 'Trip/Details/' + result[i].TripID + '">' + date + ' - ' + result[i].TripName + '</a></li>';
+                let tripNumber = '';
+                if (result.length > 1) {
+                    tripNumber = result.length + ' trips';
+                } else {
+                    tripNumber = result.length + ' trip';
                 }
-                trips += '</ul>';
-                content.innerHTML = '<b><a href="' + baseURL + 'Destination/Details/' + feature[0].A.DestinationID + '">' + feature[0].A.DestinationName + '</a></b>' + trips;
+                content.innerHTML = '<div>' + feature[0].A.DestinationName + '</div><div><a href="' + baseURL + 'Destination/Details/' + feature[0].A.DestinationID + '">' + tripNumber + '</a></div>';
                 overlay.setPosition(event.coordinate);
             }
         });

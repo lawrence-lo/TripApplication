@@ -1,28 +1,46 @@
 ﻿@model TripApplication.Models.ViewModels.UpdateDestination
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Update Destination";
 }
 
-<h2>Update Destination</h2>
-<form action="/Destination/Update/@Model.SelectedDestination.DestinationID" method="POST">
-    <div style="display:none;">
-        @* Pass through the destination ID *@
-        <input type="text" name="DestinationID" value="@Model.SelectedDestination.DestinationID" />
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h2 class="text-center">Update Destination</h2>
+        <form class="form-horizontal" action="/Destination/Update/@Model.SelectedDestination.DestinationID" method="POST">
+            <div style="display:none;">
+                @* Pass through the destination ID *@
+                <input type="text" name="DestinationID" value="@Model.SelectedDestination.DestinationID">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationName">Name</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationName" name="DestinationName" value="@Model.SelectedDestination.DestinationName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationCountry">Country</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationCountry" name="DestinationCountry" value="@Model.SelectedDestination.DestinationCountry">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationLatitude">Latitude</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationLatitude" name="DestinationLatitude" value="@Model.SelectedDestination.DestinationLatitude">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationLongitude">Longitude</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationLongitude" name="DestinationLongitude" value="@Model.SelectedDestination.DestinationLongitude">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button class="btn btn-default btn-custom" type="submit">Update Destination</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label>Name:</label> <input type="text" name="DestinationName" value="@Model.SelectedDestination.DestinationName" />
-    </div>
-    <div>
-        <label>Country:</label> <input type="text" name="DestinationCountry" value="@Model.SelectedDestination.DestinationCountry" />
-    </div>
-    <div>
-        <label>Latitude:</label> <input type="text" name="DestinationLatitude" value="@Model.SelectedDestination.DestinationLatitude" />
-    </div>
-    <div>
-        <label>Longitude:</label> <input type="text" name="DestinationLongitude" value="@Model.SelectedDestination.DestinationLongitude" />
-    </div>
-    <div>
-        <input type="submit" value="Update Destination" />
-    </div>
-</form>
+</div>

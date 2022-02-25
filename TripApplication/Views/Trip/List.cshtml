@@ -1,14 +1,19 @@
 ﻿@model IEnumerable<TripApplication.Models.TripDto>
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "List of trips";
 }
-
-<h2>List</h2>
-<a href="/Trip/New">New Trip</a>
-@foreach (var trip in Model)
-{
-    <h2><a href="/Trip/Details/@trip.TripID">@trip.TripName</a></h2>
-    <div>From: @trip.TripFromDate.ToString("MMM dd, yyyy")</div>
-    <div>To: @trip.TripToDate.ToString("MMM dd, yyyy")</div>
-    <div>Remarks: @trip.TripRemarks</div>
-}
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h2 class="text-center">List of trips</h2>
+        <div class="text-right"><a class="btn btn-default btn-custom" href="/Trip/New" role="button">New Trip</a></div>
+        @foreach (var trip in Model)
+        {
+            <div class="list-group text-center">
+                <a href="/Trip/Details/@trip.TripID" class="list-group-item">
+                    <h4 class="list-group-item-heading">@trip.TripFromDate.ToString("MMM dd, yyyy") - @trip.TripToDate.ToString("MMM dd, yyyy")</h4>
+                    <p class="list-group-item-text">@trip.TripName</p>
+                </a>
+            </div>
+        }
+    </div>
+</div>

@@ -1,23 +1,41 @@
 ﻿
 @{
-    ViewBag.Title = "New";
+    ViewBag.Title = "New Destination";
 }
 
-<h2>Create Destination</h2>
-<form action="/Destination/Create" method="POST">
-    <div>
-        <label>Name:</label> <input type="text" name="DestinationName" />
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h2 class="text-center">New Destination</h2>
+        <form class="form-horizontal" action="/Destination/Create" method="POST">
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationName">Name</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationName" name="DestinationName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationCountry">Country</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationCountry" name="DestinationCountry">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationLatitude">Latitude</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationLatitude" name="DestinationLatitude">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="DestinationLongitude">Longitude</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="DestinationLongitude" name="DestinationLongitude">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button class="btn btn-default btn-custom" type="submit">Add Destination</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label>Country:</label> <input type="text" name="DestinationCountry" />
-    </div>
-    <div>
-        <label>Latitude:</label> <input type="text" name="DestinationLatitude" />
-    </div>
-    <div>
-        <label>Longitude:</label> <input type="text" name="DestinationLongitude" />
-    </div>
-    <div>
-        <input type="submit" value="Add Destination" />
-    </div>
-</form>
+</div>

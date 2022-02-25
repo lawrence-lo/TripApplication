@@ -1,30 +1,53 @@
 ﻿@model TripApplication.Models.ViewModels.UpdateTrip
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Update Trip";
 }
 
-<h2>Update Trip</h2>
-<form action="/Trip/Update/@Model.SelectedTrip.TripID" method="POST" enctype="multipart/form-data">
-    <div style="display:none;">
-        @* Pass through the trip ID *@
-        <input type="text" name="TripID" value="@Model.SelectedTrip.TripID" />
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h2 class="text-center">Update Trip</h2>
+        <form class="form-horizontal" action="/Trip/Update/@Model.SelectedTrip.TripID" method="POST" enctype="multipart/form-data">
+            <div style="display:none;">
+                @* Pass through the trip ID *@
+                <input type="text" name="TripID" value="@Model.SelectedTrip.TripID">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripName">Trip Name</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="TripName" name="TripName" value="@Model.SelectedTrip.TripName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripFromDate">From</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="date" id="TripFromDate" name="TripFromDate" value="@Model.SelectedTrip.TripFromDate.ToString("yyyy-MM-dd")">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripToDate">To</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="date" id="TripToDate" name="TripToDate" value="@Model.SelectedTrip.TripToDate.ToString("yyyy-MM-dd")">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripRemarks">Remarks</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" id="TripRemarks" name="TripRemarks" rows="5">@Model.SelectedTrip.TripRemarks</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="TripToDate">Photo</label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="file" id="TripPic" name="TripPic">
+                </div>
+            </div>
+  
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button class="btn btn-default btn-custom" type="submit">Update Trip</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label>Name:</label> <input type="text" name="TripName" value="@Model.SelectedTrip.TripName" />
-    </div>
-    <div>
-        <label>From:</label> <input type="date" name="TripFromDate" value="@Model.SelectedTrip.TripFromDate.ToString("yyyy-MM-dd")" />
-    </div>
-    <div>
-        <label>To:</label> <input type="date" name="TripToDate" value="@Model.SelectedTrip.TripToDate.ToString("yyyy-MM-dd")" />
-    </div>
-    <div>
-        <label>Remarks:</label><textarea name="TripRemarks" rows="4" cols="50">@Model.SelectedTrip.TripRemarks</textarea>
-    </div>
-    <div>
-        <input type="file" name="TripPic" />
-    </div>
-    <div>
-        <input type="submit" value="Update Trip" />
-    </div>
-</form>
+</div>

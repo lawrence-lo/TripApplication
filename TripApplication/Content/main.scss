@@ -1,5 +1,30 @@
 ﻿/* make changes to the !default Bootstrap variables */
-/* $navbar-inverse-bg: #FFFFFF; */
+/* || Typography */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Lobster&display=swap');
+/* CSS rules to specify families
+font-family: 'Lato', sans-serif;
+font-family: 'Merriweather', serif;
+font-family: 'Lobster', cursive;
+*/
+$font-family-sans-serif: 'Lato', sans-serif;
+$font-family-serif: 'Merriweather', serif;
+
+/* || General styles */
+$link-hover-decoration: none;
+$brand-primary: #2F3A5B;
+
+$navbar-inverse-brand-color: #2F3A5B;
+$navbar-inverse-brand-hover-color: #2F3A5B;
+$navbar-inverse-color: #F5F5F2;
+$navbar-inverse-link-color: #F5F5F2;
+$navbar-inverse-link-hover-color: #2F3A5B;
+$navbar-inverse-bg: transparent;
+$navbar-inverse-toggle-hover-bg: transparent;
+$navbar-inverse-toggle-border-color: transparent;
+
+$list-group-bg: #F5F5F2;
+$list-group-border: none;
+$list-group-hover-bg: #E1A259;
 
 /* import Bootstrap to set the changes! */
 @import "bootstrap.scss";

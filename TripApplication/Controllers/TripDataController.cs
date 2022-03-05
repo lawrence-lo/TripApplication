@@ -97,6 +97,7 @@ namespace TripApplication.Controllers
         /// </example>
         [HttpPost]
         [Route("api/TripData/AssociateTripWithDestination/{tripid}/{destinationid}")]
+        [Authorize]
         public IHttpActionResult AssociateTripWithDestination(int tripid, int destinationid)
         {
             Trip SelectedTrip = db.Trips.Include(a => a.Destinations).Where(a => a.TripID == tripid).FirstOrDefault();
@@ -128,6 +129,7 @@ namespace TripApplication.Controllers
         /// </example>
         [HttpPost]
         [Route("api/TripData/UnassociateTripWithDestination/{tripid}/{destinationid}")]
+        [Authorize]
         public IHttpActionResult UnAssociateTripWithDestination(int tripid, int destinationid)
         {
             Trip SelectedTrip = db.Trips.Include(a => a.Destinations).Where(a => a.TripID == tripid).FirstOrDefault();
@@ -198,6 +200,7 @@ namespace TripApplication.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateTrip(int id, Trip trip)
         {
             if (!ModelState.IsValid)
@@ -243,8 +246,8 @@ namespace TripApplication.Controllers
         /// FORM-DATA: image
         /// </example>
         /// https://stackoverflow.com/questions/28369529/how-to-set-up-a-web-api-controller-for-multipart-form-data
-
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UploadTripPic(int id)
         {
 
@@ -332,6 +335,7 @@ namespace TripApplication.Controllers
         /// </example>
         [ResponseType(typeof(Trip))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult AddTrip(Trip trip)
         {
             if (!ModelState.IsValid)
@@ -360,6 +364,7 @@ namespace TripApplication.Controllers
         /// </example>
         [ResponseType(typeof(Trip))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteTrip(int id)
         {
             Trip trip = db.Trips.Find(id);

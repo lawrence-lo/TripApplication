@@ -231,6 +231,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ddetails.css" />
     <Content Include="Content\home.css" />
+    <Content Include="Content\manage.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\main.css">
       <DependentUpon>main.scss</DependentUpon>
     </Content>
@@ -238,6 +240,7 @@
       <DependentUpon>main.css</DependentUpon>
     </Content>
     <Content Include="Content\map.css" />
+    <Content Include="Content\register.css" />
     <Content Include="Content\tdetails.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />

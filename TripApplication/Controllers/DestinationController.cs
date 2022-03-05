@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
-//using System.Diagnostics;
+using System.Diagnostics;
 using TripApplication.Models;
 using TripApplication.Models.ViewModels;
 using System.Web.Script.Serialization;
@@ -18,8 +18,36 @@ namespace TripApplication.Controllers
 
         static DestinationController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44399/api/");
+        }
+
+        /// <summary>
+        /// Grabs the authentication cookie sent to this controller.
+        /// </summary>
+        private void GetApplicationCookie()
+        {
+            string token = "";
+
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            //collect token as it is submitted to the controller
+            //use it to pass along to the WebAPI.
+            Debug.WriteLine("Token Submitted is : " + token);
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
         }
 
         // GET: Destination/List
@@ -68,6 +96,7 @@ namespace TripApplication.Controllers
         }
 
         // GET: Destination/New
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -75,8 +104,10 @@ namespace TripApplication.Controllers
 
         // POST: Destination/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Destination destination)
         {
+            GetApplicationCookie();//get token credentials
             //objective: add a new destination into our system using the API
             //curl -H "Content-Type:application/json" -d @destination.json https://localhost:44399/api/destinationdata/adddestination
             string url = "destinationdata/adddestination";
@@ -98,6 +129,7 @@ namespace TripApplication.Controllers
         }
 
         // GET: Destination/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             UpdateDestination ViewModel = new UpdateDestination();
@@ -113,8 +145,10 @@ namespace TripApplication.Controllers
 
         // POST: Destination/Update/5
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, Destination destination)
         {
+            GetApplicationCookie();//get token credentials
             string url = "destinationdata/updatedestination/" + id;
             string jsonpayload = jss.Serialize(destination);
             HttpContent content = new StringContent(jsonpayload);
@@ -131,6 +165,7 @@ namespace TripApplication.Controllers
         }
 
         // GET: Destination/DeleteConfirm/5
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "destinationdata/finddestination/" + id;
@@ -141,8 +176,10 @@ namespace TripApplication.Controllers
 
         // POST: Destination/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            GetApplicationCookie();//get token credentials
             string url = "destinationdata/deletedestination/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

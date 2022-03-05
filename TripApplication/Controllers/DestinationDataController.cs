@@ -194,6 +194,7 @@ namespace TripApplication.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult UpdateDestination(int id, Destination destination)
         {
             if (!ModelState.IsValid)
@@ -243,6 +244,7 @@ namespace TripApplication.Controllers
         /// </example>
         [ResponseType(typeof(Destination))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult AddDestination(Destination destination)
         {
             if (!ModelState.IsValid)
@@ -271,6 +273,7 @@ namespace TripApplication.Controllers
         /// </example>
         [ResponseType(typeof(Destination))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteDestination(int id)
         {
             Destination destination = db.Destinations.Find(id);

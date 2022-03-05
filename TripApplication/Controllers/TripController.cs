@@ -18,8 +18,36 @@ namespace TripApplication.Controllers
 
         static TripController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44399/api/");
+        }
+
+        /// <summary>
+        /// Grabs the authentication cookie sent to this controller.
+        /// </summary>
+        private void GetApplicationCookie()
+        {
+            string token = "";
+
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            //collect token as it is submitted to the controller
+            //use it to pass along to the WebAPI.
+            Debug.WriteLine("Token Submitted is : " + token);
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
         }
 
         // GET: Trip/List
@@ -69,8 +97,10 @@ namespace TripApplication.Controllers
 
         // POST: Trip/Associate/{tripid}
         [HttpPost]
+        [Authorize]
         public ActionResult Associate(int id, int DestinationID)
         {
+            GetApplicationCookie();//get token credentials
             //call our api to associate trip with destination
             string url = "tripdata/associatetripwithdestination/" + id + "/" + DestinationID;
             HttpContent content = new StringContent("");
@@ -82,8 +112,10 @@ namespace TripApplication.Controllers
 
         // Get: Trip/UnAssociate/{id}?DestinationID={destinationID}
         [HttpGet]
+        [Authorize]
         public ActionResult UnAssociate(int id, int DestinationID)
         {
+            GetApplicationCookie();//get token credentials
             //call our api to associate trip with destination
             string url = "tripdata/unassociatetripwithdestination/" + id + "/" + DestinationID;
             HttpContent content = new StringContent("");
@@ -101,6 +133,7 @@ namespace TripApplication.Controllers
         }
 
         // GET: Trip/New
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -108,8 +141,10 @@ namespace TripApplication.Controllers
 
         // POST: Trip/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Trip trip)
         {
+            GetApplicationCookie();//get token credentials
             //objective: add a new trip into our system using the API
             //curl -H "Content-Type:application/json" -d @trip.json https://localhost:44399/api/tripdata/addtrip
             string url = "tripdata/addtrip";
@@ -131,6 +166,7 @@ namespace TripApplication.Controllers
         }
 
         // GET: Trip/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             UpdateTrip ViewModel = new UpdateTrip();
@@ -146,9 +182,10 @@ namespace TripApplication.Controllers
 
         // POST: Trip/Update/5
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, Trip trip, HttpPostedFileBase TripPic)
         {
-
+            GetApplicationCookie();//get token credentials
             string url = "tripdata/updatetrip/" + id;
             string jsonpayload = jss.Serialize(trip);
             HttpContent content = new StringContent(jsonpayload);
@@ -182,6 +219,7 @@ namespace TripApplication.Controllers
         }
 
         // GET: Trip/DeleteConfirm/5
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "tripdata/findtrip/" + id;
@@ -192,8 +230,10 @@ namespace TripApplication.Controllers
 
         // POST: Trip/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
+            GetApplicationCookie();//get token credentials
             string url = "tripdata/deletetrip/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

@@ -73,6 +73,10 @@ main, footer {
     white-space: normal;
 }
 
+.navbar-collapse {
+    overflow-x: hidden;
+}
+
 @media screen and (max-width: 768px) {
     body {
         background-size: auto;

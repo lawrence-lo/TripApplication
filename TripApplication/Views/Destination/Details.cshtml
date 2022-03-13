@@ -11,20 +11,20 @@
         <div class="list-group">
             <div class="list-group-item">
                 <h2 class="list-group-item-heading text-center">@Model.SelectedDestination.DestinationName</h2>
-                <p class="list-group-item-text">
-                    <div>
+                <div class="list-group-item-text">
+                    <div class="row y-margin">
                         <div class="col-sm-4">Country</div>
                         <div class="col-sm-8">@Model.SelectedDestination.DestinationCountry</div>
                     </div>
-                    <div>
+                    <div class="row y-margin">
                         <div class="col-sm-4">Latitude</div>
                         <div class="col-sm-8">@Model.SelectedDestination.DestinationLatitude</div>
                     </div>
-                    <div>
+                    <div class="row y-margin">
                         <div class="col-sm-4">Longitude</div>
                         <div class="col-sm-8">@Model.SelectedDestination.DestinationLongitude</div>
                     </div>
-                    <div>
+                    <div class="row y-margin">
                         <div class="col-sm-4">Trip(s)</div>
                         <div class="col-sm-8">
                             <ul>
@@ -35,15 +35,18 @@
                             </ul>
                         </div>
                     </div>
-                </p>
-                <div class="col-sm-offset-4">
-                    <a class="btn btn-info y-margin" href="/Destination/Edit/@Model.SelectedDestination.DestinationID" role="button">Update</a>
-                    <a class="btn btn-danger y-margin" href="/Destination/DeleteConfirm/@Model.SelectedDestination.DestinationID" role="button">Delete</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <a class="btn btn-info y-margin" href="/Destination/Edit/@Model.SelectedDestination.DestinationID" role="button">Update</a>
+        <a class="btn btn-danger y-margin" href="/Destination/DeleteConfirm/@Model.SelectedDestination.DestinationID" role="button">Delete</a>
+    </div>
+}
 <div class="col-md-12 text-center y-margin">
     <a class="primary-light" href="/Destination/List">Back to list</a>
 </div>

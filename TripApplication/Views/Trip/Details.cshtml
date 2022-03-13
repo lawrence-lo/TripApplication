@@ -13,6 +13,8 @@
     }
 }
 
+
+
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <div class="list-group">
@@ -20,51 +22,67 @@
                 <div class="text-center">
                     <img class="img-rounded" alt="@Model.SelectedTrip.TripName" src="@imageurl">
                 </div>
-                    <h2 class="list-group-item-heading text-center">@Model.SelectedTrip.TripFromDate.ToString("MMM dd, yyyy") - @Model.SelectedTrip.TripToDate.ToString("MMM dd, yyyy")</h2>
+                <h2 class="list-group-item-heading text-center">@Model.SelectedTrip.TripFromDate.ToString("MMM dd, yyyy") - @Model.SelectedTrip.TripToDate.ToString("MMM dd, yyyy")</h2>
                 <div class="list-group-item-text">
-                    <div>
+                    <div class="row y-margin">
                         <div class="col-sm-4">Destination(s)</div>
                         <div class="col-sm-8">
                             <ul>
                                 @foreach (var destination in Model.RelatedDestinations)
                                 {
-                                    <li><a href="/Destination/Details/@destination.DestinationID">@destination.DestinationName</a> <a style="color:#ab2020;" href="/Trip/Unassociate/@Model.SelectedTrip.TripID?DestinationID=@destination.DestinationID">[x]</a></li>
+                                    <li>
+                                        <a href="/Destination/Details/@destination.DestinationID">@destination.DestinationName</a>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a style="color:#ab2020;" href="/Trip/Unassociate/@Model.SelectedTrip.TripID?DestinationID=@destination.DestinationID">[x]</a>
+                                        }
+                                    </li>
                                 }
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-offset-4">
-                        <form class="form-inline" method="POST" action="/Trip/Associate/@Model.SelectedTrip.TripID">
-                            <div class="form-group">
-                                <label class="control-label sr-only" for="DestinationID">Add Destination(s)</label>
-                                <select class="form-control input-sm" name="DestinationID" id="DestinationID">
-                                    <option disabled selected> Add Destination(s) </option>
-                                    @foreach (var destination in Model.UnrelatedDestinations)
-                                    {
-                                        <option value="@destination.DestinationID">@destination.DestinationName</option>
-                                    }
-                                </select>
-                                <button class=" btn btn-default btn-sm" type="submit">Add</button>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="row y-margin">
+                            <div class="col-sm-offset-4 col-sm-10">
+                                <form class="form-inline" method="POST" action="/Trip/Associate/@Model.SelectedTrip.TripID">
+                                    <div class="form-group">
+                                        <label class="control-label sr-only" for="DestinationID">Add Destination(s)</label>
+                                        <select class="form-control input-sm" name="DestinationID" id="DestinationID">
+                                            <option disabled selected> Add Destination(s) </option>
+                                            @foreach (var destination in Model.UnrelatedDestinations)
+                                            {
+                                                <option value="@destination.DestinationID">@destination.DestinationName</option>
+                                            }
+                                        </select>
+                                        <button class=" btn btn-default btn-sm" type="submit">Add</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                    </div>
-                    <div class="y-margin">
+                        </div>
+                    }
+                    <div class="row y-margin">
                         <div class="col-sm-4">Trip Name</div>
                         <div class="col-sm-8">@Model.SelectedTrip.TripName</div>
                     </div>
-                    <div class="y-margin">
+                    <div class="row y-margin">
                         <div class="col-sm-4">Remarks</div>
                         <div class="col-sm-8">@Model.SelectedTrip.TripRemarks</div>
                     </div>
-                </div>
-                <div class="text-center">
-                    <a class="btn btn-info y-margin" href="/Trip/Edit/@Model.SelectedTrip.TripID" role="button">Update</a>
-                    <a class="btn btn-danger y-margin" href="/Trip/DeleteConfirm/@Model.SelectedTrip.TripID" role="button">Delete</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <a class="btn btn-info y-margin" href="/Trip/Edit/@Model.SelectedTrip.TripID" role="button">Update</a>
+        <a class="btn btn-danger y-margin" href="/Trip/DeleteConfirm/@Model.SelectedTrip.TripID" role="button">Delete</a>
+    </div>
+}
+
 <div class="col-md-12 text-center y-margin">
     <a class="primary-light" href="/Trip/List">Back to list</a>
 </div>

@@ -6,7 +6,10 @@
 <div class="row">
     <div class="col-sm-4 col-sm-offset-4">
         <h2 class="text-center">List of destinations</h2>
-        <div class="text-right"><a class="btn btn-default btn-custom" href="/Destination/New" role="button">New Destination</a></div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="text-right"><a class="btn btn-default btn-custom" href="/Destination/New" role="button">New Destination</a></div>
+        }
         @foreach (var destination in Model)
         {
             <div class="list-group text-center">

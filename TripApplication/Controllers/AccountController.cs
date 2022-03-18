@@ -136,8 +136,7 @@ namespace TripApplication.Controllers
 
         //
         // GET: /Account/Register
-        //[AllowAnonymous]
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -146,8 +145,7 @@ namespace TripApplication.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        //[AllowAnonymous]
-        [Authorize]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

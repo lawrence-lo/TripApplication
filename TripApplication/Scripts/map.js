@@ -1,4 +1,4 @@
-﻿const baseURL = "https://localhost:44399/";
+﻿const baseURL = window.location.origin + "/";
 
 // Create a map
 var map = new ol.Map({

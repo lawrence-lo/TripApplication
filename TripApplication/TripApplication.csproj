@@ -240,6 +240,8 @@
     <Content Include="Content\main.min.css">
       <DependentUpon>main.css</DependentUpon>
     </Content>
+	<Content Include="Content\Images\Trips\default.jpg" />
+	<Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\map.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\tdetails.css" />
